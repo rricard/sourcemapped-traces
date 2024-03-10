@@ -1,6 +1,6 @@
 {
   "name": "tracetool",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "tracetool is a utility to resolve javascript sourcemaps various perf traces",
   "main": "lib/mod.js",
   "bin": "bin/main.js",
