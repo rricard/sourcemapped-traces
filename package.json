@@ -9,6 +9,6 @@
   "author": "Robin Ricard <git@rricard.me>",
   "license": "MIT",
   "dependencies": {
-    "@bloomberg/pasta-sourcemaps": "^1.6.0"
+    "source-map": "^0.7.4"
   }
 }
