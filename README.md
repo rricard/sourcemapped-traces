@@ -3,14 +3,16 @@
 tracetool is a utility to resolve javascript sourcemaps in:
 
 - Chromium event traces taken with the [performance tab](https://developer.chrome.com/docs/devtools/performance/reference) in the chrome inspector
-- Node inspector traces taken with the [`node:inspector`](https://nodejs.org/api/inspector.html) API.
+- Chromium allocation sampling traces taken with the [memory tab](https://developer.chrome.com/docs/devtools/memory) in the chrome inspector
+- Node inspector traces (cpu or heap) taken with the [`node:inspector`](https://nodejs.org/api/inspector.html) API. You can see an example in [this repo](./example/input.js).
 
 ![Screenshot showing the non-resolved trace and resolved trace in the VSCode flamechart vizualizer](./screenshot.png)
 
 ## Using the cli tool
 
 ```
-npx @rricard/tracetool CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+npx @rricard/tracetool cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+npx @rricard/tracetool heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
 ```
 
 For instance, you can try in this repo in the `example/` directory:
@@ -21,7 +23,8 @@ npm install
 npm run build
 npm start
 
-npx @rricard/tracetool ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile
+npx @rricard/tracetool cpu ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile
+npx @rricard/tracetool heap ./profile.heapprofile ./output.js.map ./profile.mapped.heapprofile
 ```
 
 In most cases, this should properly resolve your sources and you can continue
@@ -65,3 +68,5 @@ const { decoded, inputMisses } = await decodeCpuProfile(
 console.warn("Input misses", inputMisses);
 await writeFile(process.argv[3], JSON.stringify(decoded), "utf8");
 ```
+
+Both `decodeCpuProfile` and `decodeHeapProfile` have the same signature.

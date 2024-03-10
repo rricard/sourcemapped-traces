@@ -7,6 +7,7 @@
   "scripts": {
     "build": "npx esbuild --bundle --minify input.js --outfile=output.js --sourcemap --platform=node --format=esm",
     "start": "node output.js",
-    "decode": "node ../bin/main.js ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile"
+    "cpu-decode": "node ../bin/main.js cpu ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile",
+    "heap-decode": "node ../bin/main.js heap ./profile.heapprofile ./output.js.map ./profile.mapped.heapprofile"
   }
 }

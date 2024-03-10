@@ -1,4 +1,4 @@
-export interface CpuProfileCallFrame {
+export interface ProfileCallFrame {
   functionName: string;
   scriptId: string;
   url: string;
@@ -8,7 +8,7 @@ export interface CpuProfileCallFrame {
 
 export interface CpuProfileNode {
   id: number;
-  callFrame: CpuProfileCallFrame;
+  callFrame: ProfileCallFrame;
   hitCount: number;
   children: number[];
 }
@@ -19,4 +19,15 @@ export interface CpuProfile {
   endTime: number;
   samples: number[];
   timeDeltas: number[];
+}
+
+export interface HeapNode {
+  id: string;
+  callFrame: ProfileCallFrame;
+  selfSize: number;
+  children: HeapNode[];
+}
+
+export interface HeapProfile {
+  head: HeapNode;
 }

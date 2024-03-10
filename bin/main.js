@@ -1,29 +1,49 @@
 #!/usr/bin/env node
 // @ts-check
-import { decodeCpuProfile } from "../lib/mod.js";
+import { decodeCpuProfile, decodeHeapProfile } from "../lib/mod.js";
 import { readFile, writeFile } from "node:fs/promises";
 
+const HELP_TEXT = `
+USAGE: tracetool cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+USAGE: tracetool heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]`;
+
 async function main(args) {
-  if (args.length < 4 || args.length > 5) {
-    console.error(`
-USAGE: tracetool CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]`);
+  if (args.length < 5 || args.length > 6) {
+    console.error(HELP_TEXT);
     process.exit(1);
   }
-  const [_, __, profilePath, sourceMapPath, outPath] = args;
+  const [_, __, type, profilePath, sourceMapPath, outPath] = args;
   const profileJson = JSON.parse(await readFile(profilePath, "utf8"));
   const sourceMapJson = JSON.parse(await readFile(sourceMapPath, "utf8"));
-  const { inputMisses: inputFiles } = await decodeCpuProfile(profileJson, {});
-  /** @type {Record<string, typeof sourceMapJson>} */
-  const sourceMaps = {};
-  for (const inputFile of inputFiles.values()) {
-    if (inputFile.startsWith("node:")) continue;
-    if (!inputFile.endsWith(".js")) continue;
-    sourceMaps[inputFile] = sourceMapJson;
+  let result;
+  if (type === "cpu") {
+    const { inputMisses: inputFiles } = await decodeCpuProfile(profileJson, {});
+    /** @type {Record<string, typeof sourceMapJson>} */
+    const sourceMaps = {};
+    for (const inputFile of inputFiles.values()) {
+      if (inputFile.startsWith("node:")) continue;
+      if (!inputFile.endsWith(".js")) continue;
+      sourceMaps[inputFile] = sourceMapJson;
+    }
+    result = await decodeCpuProfile(profileJson, sourceMaps);
+  } else if (type === "heap") {
+    const { inputMisses: inputFiles } = await decodeHeapProfile(
+      profileJson,
+      {}
+    );
+    /** @type {Record<string, typeof sourceMapJson>} */
+    const sourceMaps = {};
+    for (const inputFile of inputFiles.values()) {
+      if (inputFile.startsWith("node:")) continue;
+      if (!inputFile.endsWith(".js")) continue;
+      sourceMaps[inputFile] = sourceMapJson;
+    }
+    result = await decodeHeapProfile(profileJson, sourceMaps);
+  } else {
+    console.error(HELP_TEXT);
+    process.exit(1);
   }
-  const { decoded, inputMisses } = await decodeCpuProfile(
-    profileJson,
-    sourceMaps
-  );
+  const { decoded, inputMisses } = result;
   console.warn("Input misses", inputMisses);
   await writeFile(outPath ?? `${profilePath}.decoded`, JSON.stringify(decoded));
 }

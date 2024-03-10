@@ -1,3 +1,4 @@
 output.js
 output.js.map
 *.cpuprofile
+*.heapprofile
