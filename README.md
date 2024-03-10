@@ -52,12 +52,10 @@ import { readFile, writeFile } from "node:fs/promises";
 const profileJson = JSON.parse(await readFile(process.args[2], "utf8"));
 const sourcemaps = {
   "http://example.com/foo.js": JSON.parse(
-    await readFile("./foo.js.map"),
-    "utf8"
+    await readFile("./foo.js.map", "utf8")
   ),
   "http://example.com/bar.js": JSON.parse(
-    await readFile("./bar.js.map"),
-    "utf8"
+    await readFile("./bar.js.map", "utf8")
   ),
 };
 const { decoded, inputMisses } = await decodeCpuProfile(
