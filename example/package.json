@@ -5,7 +5,8 @@
     "esbuild": "^0.20.1"
   },
   "scripts": {
-    "build": "npx esbuild --bundle --minify input.ts --outfile=output.js --sourcemap --platform=node --format=esm",
-    "start": "node output.js"
+    "build": "npx esbuild --bundle --minify input.js --outfile=output.js --sourcemap --platform=node --format=esm",
+    "start": "node output.js",
+    "decode": "node ../bin/main.js ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile"
   }
 }

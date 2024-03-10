@@ -7,7 +7,7 @@ session.connect();
 await session.post("Profiler.enable");
 await session.post("Profiler.start");
 
-function fib(n: number) {
+function fib(n) {
   if (n <= 1) return 1;
   return fib(n - 2) + fib(n - 1);
 }
