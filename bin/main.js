@@ -7,19 +7,19 @@ async function main(args) {
   const [_, __, profilePath, sourceMapPath, outPath] = args;
   const profileJson = JSON.parse(await readFile(profilePath, "utf8"));
   const sourceMapJson = JSON.parse(await readFile(sourceMapPath, "utf8"));
-  const { sourceMisses: sourceFiles } = await decodeCpuProfile(profileJson, {});
+  const { inputMisses: inputFiles } = await decodeCpuProfile(profileJson, {});
   /** @type {Record<string, typeof sourceMapJson>} */
   const sourceMaps = {};
-  for (const sourceFile of sourceFiles.values()) {
-    if (sourceFile.startsWith("node:")) continue;
-    if (!sourceFile.endsWith(".js")) continue;
-    sourceMaps[sourceFile] = sourceMapJson;
+  for (const inputFile of inputFiles.values()) {
+    if (inputFile.startsWith("node:")) continue;
+    if (!inputFile.endsWith(".js")) continue;
+    sourceMaps[inputFile] = sourceMapJson;
   }
-  const { decoded, sourceMisses } = await decodeCpuProfile(
+  const { decoded, inputMisses } = await decodeCpuProfile(
     profileJson,
     sourceMaps
   );
-  console.warn("Source misses", sourceMisses);
+  console.warn("Input misses", inputMisses);
   await writeFile(outPath ?? `${profilePath}.mapped`, JSON.stringify(decoded));
 }
 
