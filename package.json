@@ -1,5 +1,5 @@
 {
-  "name": "tracetool",
+  "name": "@rricard/tracetool",
   "version": "0.0.1",
   "description": "tracetool is a utility to resolve javascript sourcemaps various perf traces",
   "main": "lib/mod.js",

@@ -4,6 +4,11 @@ import { decodeCpuProfile } from "../lib/mod.js";
 import { readFile, writeFile } from "node:fs/promises";
 
 async function main(args) {
+  if (args.length < 4 || args.length > 5) {
+    console.error(`
+USAGE: tracetool CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]`);
+    process.exit(1);
+  }
   const [_, __, profilePath, sourceMapPath, outPath] = args;
   const profileJson = JSON.parse(await readFile(profilePath, "utf8"));
   const sourceMapJson = JSON.parse(await readFile(sourceMapPath, "utf8"));
@@ -20,7 +25,7 @@ async function main(args) {
     sourceMaps
   );
   console.warn("Input misses", inputMisses);
-  await writeFile(outPath ?? `${profilePath}.mapped`, JSON.stringify(decoded));
+  await writeFile(outPath ?? `${profilePath}.decoded`, JSON.stringify(decoded));
 }
 
 main(process.argv);
