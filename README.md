@@ -49,7 +49,7 @@ In this case, we would recommend building up your own cli using the API:
 import { decodeCpuProfile } from "@rricard/tracetool";
 import { readFile, writeFile } from "node:fs/promises";
 
-const profileJson = JSON.parse(await readFile(process.args[3], "utf8"));
+const profileJson = JSON.parse(await readFile(process.args[2], "utf8"));
 const sourcemaps = {
   "http://example.com/foo.js": JSON.parse(
     await readFile("./foo.js.map"),
@@ -65,5 +65,5 @@ const { decoded, inputMisses } = await decodeCpuProfile(
   sourcemaps
 );
 console.warn("Input misses", inputMisses);
-await writeFile(process.argv[4], JSON.stringify(decoded), "utf8");
+await writeFile(process.argv[3], JSON.stringify(decoded), "utf8");
 ```
