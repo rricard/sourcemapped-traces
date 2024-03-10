@@ -1,0 +1,14 @@
+{
+  "name": "tracetool",
+  "version": "1.0.0",
+  "description": "tracetool is a utility to resolve javascript sourcemaps various perf traces",
+  "main": "lib/mod.js",
+  "bin": "bin/main.js",
+  "type": "module",
+  "scripts": {},
+  "author": "Robin Ricard <git@rricard.me>",
+  "license": "MIT",
+  "dependencies": {
+    "@bloomberg/pasta-sourcemaps": "^1.6.0"
+  }
+}
