@@ -1,5 +1,5 @@
 {
-  "name": "@rricard/sourcemapped-traces",
+  "name": "sourcemapped-traces",
   "version": "0.0.1",
   "description": "sourcemapped-traces is a utility to resolve javascript sourcemaps various perf traces",
   "main": "lib/mod.js",
