@@ -1,7 +1,7 @@
 {
-  "name": "@rricard/tracetool",
+  "name": "@rricard/sourcemapped-traces",
   "version": "0.0.1",
-  "description": "tracetool is a utility to resolve javascript sourcemaps various perf traces",
+  "description": "sourcemapped-traces is a utility to resolve javascript sourcemaps various perf traces",
   "main": "lib/mod.js",
   "bin": "bin/main.js",
   "type": "module",

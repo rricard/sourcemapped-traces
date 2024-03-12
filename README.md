@@ -1,6 +1,6 @@
-# tracetool
+# sourcemapped-traces
 
-tracetool is a utility to resolve javascript sourcemaps in:
+sourcemapped-traces is a utility to resolve javascript sourcemaps in:
 
 - Chromium event traces taken with the [performance tab](https://developer.chrome.com/docs/devtools/performance/reference) in the chrome inspector
 - Chromium allocation sampling traces taken with the [memory tab](https://developer.chrome.com/docs/devtools/memory) in the chrome inspector
@@ -11,8 +11,8 @@ tracetool is a utility to resolve javascript sourcemaps in:
 ## Using the cli tool
 
 ```
-npx @rricard/tracetool cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
-npx @rricard/tracetool heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+npx @rricard/sourcemapped-traces cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+npx @rricard/sourcemapped-traces heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
 ```
 
 For instance, you can try in this repo in the `example/` directory:
@@ -23,8 +23,8 @@ npm install
 npm run build
 npm start
 
-npx @rricard/tracetool cpu ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile
-npx @rricard/tracetool heap ./profile.heapprofile ./output.js.map ./profile.mapped.heapprofile
+npx @rricard/sourcemapped-traces cpu ./profile.cpuprofile ./output.js.map ./profile.mapped.cpuprofile
+npx @rricard/sourcemapped-traces heap ./profile.heapprofile ./output.js.map ./profile.mapped.heapprofile
 ```
 
 In most cases, this should properly resolve your sources and you can continue
@@ -49,7 +49,7 @@ you have multiple output files to map.
 In this case, we would recommend building up your own cli using the API:
 
 ```js
-import { decodeCpuProfile } from "@rricard/tracetool";
+import { decodeCpuProfile } from "@rricard/sourcemapped-traces";
 import { readFile, writeFile } from "node:fs/promises";
 
 const profileJson = JSON.parse(await readFile(process.args[2], "utf8"));

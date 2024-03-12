@@ -4,8 +4,8 @@ import { decodeCpuProfile, decodeHeapProfile } from "../lib/mod.js";
 import { readFile, writeFile } from "node:fs/promises";
 
 const HELP_TEXT = `
-USAGE: tracetool cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
-USAGE: tracetool heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]`;
+USAGE: sourcemapped-traces cpu CPUPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]
+USAGE: sourcemapped-traces heap HEAPPROFILE_FILE SOURCEMAP_FILE [DECODED_OUTPUT_FILE]`;
 
 async function main(args) {
   if (args.length < 5 || args.length > 6) {
