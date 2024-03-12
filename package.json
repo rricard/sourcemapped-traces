@@ -10,5 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "source-map": "^0.7.4"
-  }
+  },
+  "files": [
+    "bin/*.js",
+    "lib/*.js",
+    "lib/*.d.ts"
+  ]
 }
